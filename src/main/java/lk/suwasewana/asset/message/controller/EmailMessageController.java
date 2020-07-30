@@ -74,11 +74,7 @@ public class EmailMessageController {
         String emailMessageDbSubject = emailMessageDb.getSubject();
         //email message
         String emailMessageDbMessage = emailMessageDb.getMessage();
-        //send email all selected employee
-        emailMessageDb.getEmployees().forEach(
-                employee ->
-                        emailService.sendEmail(
-                                employee.getOfficeEmail(), emailMessageDbSubject, emailMessageDbMessage));
+
 
         return "redirect:/emailMessage/add";
     }
