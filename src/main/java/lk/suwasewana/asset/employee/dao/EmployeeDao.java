@@ -1,5 +1,6 @@
 package lk.suwasewana.asset.employee.dao;
 
+
 import lk.suwasewana.asset.employee.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,4 +11,6 @@ public interface EmployeeDao extends JpaRepository<Employee, Integer> {
     Employee findFirstByOrderByIdDesc();
 
     Employee findByNic(String nic);
+
+
 }
