@@ -1,0 +1,21 @@
+sewasewana medical
+=====================
+done
+1. employee
+2. user
+3. role
+4. consultation
+5. discount ration
+6. doctor
+
+
+todo->
+=================
+1. collecting center
+2. lab test parameter
+3. lab test
+4. invoice
+5. medical packages
+6. refund
+7. message
+
