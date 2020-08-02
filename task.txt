@@ -7,12 +7,12 @@ done
 4. consultation
 5. discount ration
 6. doctor
-
+7. collecting center
+8. lab test parameter
 
 todo->
 =================
-1. collecting center
-2. lab test parameter
+
 3. lab test
 4. invoice
 5. medical packages

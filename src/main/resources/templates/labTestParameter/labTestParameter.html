@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: headerFragment}">
+<head data-th-replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
     <title>Thymeleaf Springboot </title>
 </head>
 <body>
-<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
 
 <div class="container-fluid bg-secondary form-Border">
     <div class="row text-center formManagement border-info">
         <div class="col">
-            <a class="btn btn-success" href="/discountRatio/add"><i class="fa fa-user-plus"></i>
+            <a class="btn btn-success" href="/labTestParameter/add"><i class="fa fa-user-plus"></i>
                 &nbsp; New Lab Test Parameter</a>
         </div>
         <div class="col">
@@ -21,7 +21,7 @@
             </h4>
         </div>
         <div class="col">
-           <!-- <a href="/discountRatio/workingPlace" id="searchShow" class="btn btn-primary">
+           <!-- <a href="/labTestParameter/workingPlace" id="searchShow" class="btn btn-primary">
                 <i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;
                 <i class="fas fa-store-alt" style="font-size: 20px"></i>
                 &nbsp;
@@ -31,43 +31,45 @@
 </div>
 <div class="container-fluid bg-dark formBorder text-center">
     <div class="col">
-        <div class="col" id="discountRatioListPresent" th:if="${not #lists.isEmpty(discountRatios)}">
+        <div class="col" id="labTestParameterListPresent" data-th-if="${not #lists.isEmpty(labTestParameters)}">
             <table class="table table-hover table-striped" id="myTable">
                 <thead>
                 <tr>
-                    <th> Index</th>
-                    <th> Name</th>
-                    <th> Amount</th>
-                    <th> Status</th>
-                    <th> Modify</th>
+                    <th>Index</th>
+                    <th>Lab Test Parameter Name</th>
+                    <th> Unit </th>
+                    <th> Reference Range </th>
+                    <th class="text-center">Modify</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="discountRatio, rowCount : ${discountRatios}">
-                    <th th:text="${rowCount.count}"></th>
-                    <th th:text="${discountRatio.name}"></th>
-                    <th th:text="${discountRatio.amount}"></th>
-                    <th th:text="${discountRatio.discountRatioStatus.discountRatioStatus}"></th>
-                    <th>
-                        <a id="discountRatioEdit" th:href="${'/discountRatio/edit/' + discountRatio.id}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp;Edit</a>
-                        <a id="discountRatioRemove" th:href="${'/discountRatio/delete/' + discountRatio.id}"
-                           th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="btn btn-danger btn-sm">
-                            <i class="fa fa-trash"></i>
-                            Delete</a>
-                    </th>
+                <tr data-th-each="labTestParameter, rowCount : ${labTestParameters}">
+                    <th data-th-text="${rowCount.count}"></th>
+                    <th data-th-text="${labTestParameter.name}"></th>
+                    <th data-th-text="${labTestParameter.unit}"></th>
+                    <th> <span data-th-text="${labTestParameter.min}"></span>&nbsp;- &nbsp;<span
+                            data-th-text="${labTestParameter.max}"></span></th>
+                    <th><a data-th-href="${'/labTestParameter/' + labTestParameter.id}" class="btn btn-success"><i
+                            class="fa fa-folder-open"></i>&nbsp;View</a>
+                        <a data-th-href="${'/labTestParameter/edit/' + labTestParameter.id}" class="btn btn-primary"><i
+                                class="fa fa-edit"></i>&nbsp;Edit</a>
+                        <a data-th-href="${'/labTestParameter/remove/' + labTestParameter.id}"
+                           class="btn btn-danger"><i
+                                class="fa fa-trash-o" aria-hidden="true"></i>
+                            Delete</a></th>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="row" th:if="${ #lists.isEmpty(discountRatios)}">
+    <div class="row" data-th-if="${ #lists.isEmpty(labTestParameters)}">
         <div class="col-sm-12">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h3 class="text-center text-danger">
-                    <strong>There is no discountRatio upto now please add discountRatio to the system
+                    <strong>There is no labTestParameter upto now please add labTestParameter to the system
                         using add user button.
                     </strong>
                 </h3>
@@ -81,9 +83,9 @@
     </div>
 </div>
 <!--footer include-->
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
 <!--script include-->
-<script th:replace="~{fragments/script :: scriptFragment}"></script>
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
 
 </body>
 </html>

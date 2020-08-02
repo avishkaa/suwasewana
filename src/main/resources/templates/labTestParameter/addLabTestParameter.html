@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Thymeleaf Springboot </title>
+</head>
+<body>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+
+<div class="container-fluid bg-secondary form-Border">
+    <div class="row text-center formManagement border-info">
+        <div class="col">
+            <a class="btn btn-primary" href="/home">
+                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp; Home
+            </a>
+        </div>
+        <div class="col">
+            <h4 class="text-light text-center">
+                <strong>
+                    <span
+                            data-th-text="${addStatus==true?'New Discount Ratio Add':'Update Discount Ratio Details'}"></span>
+                </strong>
+            </h4>
+        </div>
+        <div class="col">
+            <a class="btn btn-primary" href="/discountRatio">
+                <i class="fa fa-list"></i>&nbsp; View List
+            </a>
+        </div>
+    </div>
+</div>
+<!--Form Content - start -->
+<div class="container-fluid" style="margin-top: 50px">
+    <div class="panel panel-primary">
+        <div class="panel panel-heading text-center">
+            <h4><b><span
+                    data-th-text="${addStatus==true?'New Lab Test Parameter Add':'Update Lab Test Parameter'}"></span></b>
+            </h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-4 ">
+                    <a class="btn btn-primary" href="/home"> Return Home</a>
+                </div>
+                <div style="text-align: center;" class="col-sm-4">
+                    <h4 class="text-info"></h4>
+                </div>
+                <div class="col-sm-4 text-right">
+                    <a href="/labTestParameter">
+                        <button class="btn btn-sm btn-primary"><span
+                                class="glyphicon glyphicon-list">&nbsp; View List </span></button>
+                    </a>
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="container-fluid">
+                    <form class="form-horizontal"
+                          data-th-action="${addStatus==true?'/labTestParameter/add':'/labTestParameter/update'}"
+                          data-th-object="${labTestParameter}" data-th-method="POST">
+                        <label data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '">Errors: </label>
+                        <ul>
+                            <li data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}" class="error"></li>
+                        </ul>
+                        <div class="col-sm-6 text-center">
+                            <div class="form-group" data-th-if="${addStatus==false}">
+                                <label class="control-label col-md-4" for="id">ID :</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="id" placeholder="Enter ID Here" class="form-control"
+                                           name="id" data-th-field="*{id}"/>
+                                    <span class="error" data-th-if="${#fields.hasErrors('id')}"
+                                          data-th-errors="*{id}">Error
+                                                                                                           Number</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="code">Code </label>
+                                <div class="col-md-8">
+                                    <input data-th-if="${addStatus==true}" type="text" id="code"
+                                           placeholder="Enter Number Here" class="form-control" name="code"
+                                           data-th-field="*{code}" required/>
+                                    <input data-th-if="${addStatus==false}" type="text" class="form-control" name="code"
+                                           data-th-field="*{code}" required/>
+                                    <span class="error" data-th-if="${#fields.hasErrors('name')}"
+                                          data-th-errors="*{code}">Error
+                                                                                                               Code</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="name">Parameter Name </label>
+                                <div class="col-md-8">
+                                    <input type="text" id="name" placeholder="Enter Name Here" class="form-control"
+                                           name="name" data-th-field="*{name}" required/>
+                                    <span class="error" data-th-if="${#fields.hasErrors('name')}"
+                                          data-th-errors="*{name}">Error
+                                                                                                               Parameter Name</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" data-th-for="header">Field Header</label>
+                                <div class="col-md-4">
+                                    <select data-th-field="*{parameterHeader}" class="form-control">
+                                        <option data-th-each="parameterHeaders : ${parameterHeader}"
+                                                data-th-text="${parameterHeaders.parameterHeader}"
+                                                data-th-value="${parameterHeaders}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                           <!-- <div class="form-group">
+                                <label class="control-label col-md-4" for="result">Result</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="result" placeholder="Enter Result Here" class="form-control"
+                                           name="unit" data-th-field="*{result}"/>
+                                    <span class="error" data-th-if="${#fields.hasErrors('result')}"
+                                          data-th-errors="*{result}">Error result</span>
+                                </div>
+                            </div>-->
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="unit">Unit</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="unit" placeholder="Enter Unit Here" class="form-control"
+                                           name="unit" data-th-field="*{unit}"/>
+                                    <span class="error" data-th-if="${#fields.hasErrors('unit')}"
+                                          data-th-errors="*{unit}">Error
+                                                                                                               Unit</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="min">Min </label>
+                                <div class="col-md-8">
+                                    <input type="text" id="min" placeholder="Enter Min Reference Range Here"
+                                           class="form-control" name="min" data-th-field="*{min}"/>
+                                    <span class="error" data-th-if="${#fields.hasErrors('min')}"
+                                          data-th-errors="*{min}">Error
+                                                                                                             Unit</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="max">Max</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="max" placeholder="Enter Max Reference Range Here"
+                                           class="form-control" name="max" data-th-field="*{max}">
+                                    <span class="error" data-th-if="${#fields.hasErrors('max')}"
+                                          data-th-errors="*{max}">Error
+                                                                                                             Max Reference Range</span>
+                                </div>
+                            </div>
+                            <div class="text-center row">
+                                <button class="btn btn-success" type="submit"><span
+                                        class="glyphicon glyphicon-thumbs-up"></span>&nbsp; &nbsp;<span
+                                        data-th-text="${addStatus==true?'Save': 'Update'}"></span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--footer include-->
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+
+</body>
+</html>

@@ -2,7 +2,11 @@ package lk.suwasewana.asset.labTestParameter.entity;
 
 import lk.suwasewana.asset.labTest.entity.Enum.ParameterHeader;
 import lk.suwasewana.asset.labTest.entity.LabTest;
-import lombok.*;
+import lk.suwasewana.util.audit.AuditEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,12 +17,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
-@ToString
-public class LabTestParameter {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class LabTestParameter extends AuditEntity {
 
     private String code;
 
@@ -30,11 +29,11 @@ public class LabTestParameter {
 
     private String min;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated( EnumType.STRING )
     private ParameterHeader parameterHeader;
 
-    @ManyToMany(mappedBy = "labTestParameters",fetch=FetchType.LAZY)
-    private List<LabTest> labTests = new ArrayList<>();
+    @ManyToMany( mappedBy = "labTestParameters", fetch = FetchType.LAZY )
+    private List< LabTest > labTests = new ArrayList<>();
 
 
 }
