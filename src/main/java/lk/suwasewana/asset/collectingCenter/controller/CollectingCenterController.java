@@ -38,8 +38,7 @@ public class CollectingCenterController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String collectingCenterView(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("collectingCenter", collectingCenterService.findById(id));
-        model.addAttribute("collectingCenterStatus", CollectingCenterStatus.values());
+        model.addAttribute("collectingCenterDetails", collectingCenterService.findById(id));
         return "collectingCenter/collectingCenter-detail";
     }
 
@@ -62,7 +61,7 @@ public class CollectingCenterController {
     // Above method support to send data to front end - All List, update, edit
     //Bellow method support to do back end function save, delete, update, search
 
-    @RequestMapping(value = {"/add", "/update"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/save", "/update"}, method = RequestMethod.POST)
     public String addCollectingCenter(@Valid @ModelAttribute CollectingCenter collectingCenter, BindingResult result, Model model) {
         if (result.hasErrors()) {
             for (FieldError error : result.getFieldErrors()) {

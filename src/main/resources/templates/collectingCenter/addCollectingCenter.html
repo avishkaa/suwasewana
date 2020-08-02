@@ -31,12 +31,20 @@
             <!-- /.row -->
             <div class="row">
                 <div class="container-fluid">
-                    <form class="form-horizontal"
-                          data-th-action="${addStatus==true?'/collectingCenter/save':'/collectingCenter/update'}"
+                    <form                           data-th-action="${addStatus==true?'/collectingCenter/save':'/collectingCenter/update'}"
                           data-th-object="${collectingCenter}" data-th-method="POST">
                         <div class="col-sm-6 text-center">
                             <input data-th-if="${addStatus==false}" type="text" data-th-field="*{id}" hidden/>
-
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="name">Name<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-md-8">
+                                    <input type="text" id="name" placeholder="Enter Full Here"
+                                           class="form-control" data-th-field="*{name}" required/>
+                                    <span class="error" data-th-if="${#fields.hasErrors('name')}"
+                                          data-th-errors="*{name}">Error Full Name</span>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <label class="control-label col-md-4" for="owner">Owner Name<span
@@ -53,10 +61,10 @@
                         <div class="col-sm-6 text-center">
 
                             <div class="form-group">
-                                <label class="control-label col-md-4" for="mobile">Email</label>
+                                <label class="control-label col-md-4" for="email">Email</label>
                                 <div class="col-md-8">
-                                    <input type="text" id="email" placeholder="Enter email Here" class="form-control"
-                                           name="email" data-th-field="*{email}"/>
+                                    <input type="text" placeholder="Entet valid Email"
+                                           class="form-control" id="email" data-th-field="*{email}"/>
                                     <span class="error" data-th-if="${#fields.hasErrors('email')}"
                                           data-th-errors="*{email}">Error Email</span>
                                 </div>
@@ -65,8 +73,9 @@
                                 <label class="control-label col-md-4" for="mobile">Mobile Number<span
                                         class="text-danger">*</span></label>
                                 <div class="col-md-8">
-                                    <input type="text" id="mobile" placeholder="Enter Mobile Here" class="form-control"
-                                           name="mobile" data-th-field="*{mobile}" required/>
+                                    <input type="text" id="mobile"  minlength="9" maxlength="10"
+                                           placeholder="077230400"  class="form-control"
+                                            data-th-field="*{mobile}" required/>
                                     <span class="error" data-th-if="${#fields.hasErrors('mobile')}"
                                           data-th-errors="*{mobile}">Error Mobile Number</span>
                                 </div>
@@ -75,7 +84,7 @@
                                 <label class="control-label col-md-4" for="land">Land Number</label>
                                 <div class="col-md-8">
                                     <input type="text" id="land" placeholder="Enter Land Here" class="form-control"
-                                           name="land" data-th-field="*{land}"/>
+                                           minlength="9" maxlength="10"  data-th-field="*{land}"/>
                                     <span class="error" data-th-if="${#fields.hasErrors('land')}"
                                           data-th-errors="*{land}">Error Land Number</span>
                                 </div>
@@ -113,14 +122,10 @@
 
                         <div class="form-group text-center row">
                             <a data-th-href="@{/collectingCenter}">
-                                <button class="btn btn-dark mr-5" type="button"><span
-                                        class="glyphicon glyphicon-thumbs-up"></span>&nbsp; &nbsp;<span
-                                        data-th-text="${addStatus==true?'Save': 'Update'}"></span></button>
+                                <button class="btn btn-dark mr-5" type="button">Back</button>
                             </a>
 
-                            <button class="btn btn-warning mr-5" type="reset"><span
-                                    class="glyphicon glyphicon-thumbs-up"></span>&nbsp; &nbsp;<span
-                                    data-th-text="${addStatus==true?'Save': 'Update'}"></span></button>
+                            <button class="btn btn-warning mr-5" type="reset">Clear</button>
 
                             <button class="btn btn-success ml-3" type="submit"><span
                                     class="glyphicon glyphicon-thumbs-up"></span>&nbsp; &nbsp;<span

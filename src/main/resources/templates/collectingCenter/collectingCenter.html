@@ -33,8 +33,6 @@
                             <th> Name</th>
                             <th> Mobile</th>
                             <th> Land Number</th>
-                            <th> Date of Registered</th>
-                            <th> Created By</th>
                             <th class="text-center">Modify</th>
                         </tr>
                         </thead>
@@ -45,19 +43,18 @@
                             <th data-th-text="${collectingCenter.name}"></th>
                             <th data-th-text="${collectingCenter.mobile}"></th>
                             <th data-th-text="${collectingCenter.land}"></th>
-                            <th data-th-text="${collectingCenter.createdAt}"></th>
-                            <th data-th-text="${collectingCenter.createdBy}"></th>
                             <th><a data-th-href="${'/collectingCenter/' + collectingCenter.id}"
                                    class="btn btn-success"><i
                                     class="fa fa-folder-open"></i>&nbsp;View</a>
                                 <a data-th-href="${'/collectingCenter/edit/' + collectingCenter.id}"
                                    class="btn btn-primary"><i
                                         class="fa fa-edit"></i>&nbsp;Edit</a>
-                                <a data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}"
+                                <a
                                    data-th-href="${'/collectingCenter/remove/' + collectingCenter.id}"
                                    class="btn btn-danger"><i
                                         class="fas fa-user-times"></i>
                                     Delete</a></th>
+                          <!--  data-th-if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}"-->
                         </tr>
                         </tbody>
                     </table>

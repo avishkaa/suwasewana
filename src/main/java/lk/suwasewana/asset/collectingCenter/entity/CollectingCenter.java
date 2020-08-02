@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
 @Entity
@@ -23,16 +23,16 @@ import java.time.LocalDate;
 @JsonFilter( "CollectingCenter" )
 public class CollectingCenter extends AuditEntity {
 
-    @Min( value = 1, message = "Should be need to include one character buddy !!" )
+    @NotEmpty
     private String name;
 
-    @Min( value = 1, message = "Should be need to include one character buddy !!" )
+    @NotEmpty
     private String owner;
 
+    @NotEmpty
     private String mobile;
 
     private String land;
-
 
     private String email;
 
