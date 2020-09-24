@@ -20,7 +20,11 @@ public class ConsultationController {
     public ConsultationController(ConsultationService consultationService) {
         this.consultationService = consultationService;
     }
-
+    private String commonMethod(Model model, boolean addStatus, Consultation consultation){
+        model.addAttribute("sampleCollectingTube", consultation);
+        model.addAttribute("addStatus", addStatus);
+        return "consultation/addConsultation";
+    }
     @GetMapping
     public String consultationPage(Model model) {
         model.addAttribute("consultations", consultationService.findAll());
@@ -30,16 +34,13 @@ public class ConsultationController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("consultation", consultationService.findById(id));
-        model.addAttribute("addStatus", false);
-        return "consultation/addConsultation";
+        return commonMethod(model,false, consultationService.findById(id));
+
     }
 
     @GetMapping("/add")
     public String form(Model model) {
-        model.addAttribute("addStatus", true);
-        model.addAttribute("consultation", new Consultation());
-        return "consultation/addConsultation";
+        return commonMethod(model, true, new Consultation());
     }
 
     // Above method support to send data to front end - All List, update, edit
@@ -48,10 +49,7 @@ public class ConsultationController {
     @PostMapping(value = {"/save", "/update"})
     public String addConsultation(@Valid @ModelAttribute Consultation consultation, BindingResult result, Model model) {
         if (result.hasErrors()) {
-
-            model.addAttribute("addStatus", false);
-            model.addAttribute("consultation", consultation);
-            return "consultation/addConsultation";
+            return commonMethod(model,false, consultation);
         }
         consultationService.persist(consultation);
         return "redirect:/consultation";
