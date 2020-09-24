@@ -10,7 +10,7 @@
 <div class="container-fluid bg-secondary form-Border">
     <div class="row text-center formManagement border-info">
         <div class="col">
-            <a class="btn btn-success" href="/consultation/add"><i class="fa fa-user-plus"></i>
+            <a class="btn btn-success" href="/sampleCollectingTube/add"><i class="fa fa-user-plus"></i>
                 &nbsp; New Consultation</a>
         </div>
         <div class="col">
@@ -21,17 +21,17 @@
             </h4>
         </div>
         <div class="col">
-           <!-- <a href="/consultation/workingPlace" id="searchShow" class="btn btn-primary">
-                <i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;
-                <i class="fas fa-store-alt" style="font-size: 20px"></i>
-                &nbsp;
-            </a>-->
+            <!-- <a href="/sampleCollectingTube/workingPlace" id="searchShow" class="btn btn-primary">
+                 <i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;
+                 <i class="fas fa-store-alt" style="font-size: 20px"></i>
+                 &nbsp;
+             </a>-->
         </div>
     </div>
 </div>
 <div class="container-fluid bg-dark formBorder text-center">
     <div class="col">
-        <div class="col" id="consultationListPresent" data-th-if="${not #lists.isEmpty(consultations)}">
+        <div class="col" id="sampleCollectingTubeListPresent" data-th-if="${not #lists.isEmpty(sampleCollectingTubes)}">
             <table class="table table-hover table-striped" id="myTable">
                 <thead>
                 <tr>
@@ -41,13 +41,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr data-th-each="consultation, rowCount : ${consultations}">
+                <tr data-th-each="sampleCollectingTube, rowCount : ${sampleCollectingTubes}">
                     <th data-th-text="${rowCount.count}"></th>
-                    <th data-th-text="${consultation.name}"></th>
+                    <th data-th-text="${sampleCollectingTube.name}"></th>
                     <th>
-                        <a id="consultationEdit" data-th-href="${'/consultation/edit/' + consultation.id}"
+                        <a data-th-href="${'/sampleCollectingTube/edit/' + sampleCollectingTube.id}"
                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp;Edit</a>
-                        <a id="consultationRemove" data-th-href="${'/consultation/delete/' + consultation.id}"
+                        <a data-th-href="${'/sampleCollectingTube/delete/' + sampleCollectingTube.id}"
                            data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
                            class="btn btn-danger btn-sm">
                             <i class="fa fa-trash"></i>
@@ -58,15 +58,15 @@
             </table>
         </div>
     </div>
-    <div class="row" data-th-if="${ #lists.isEmpty(consultations)}">
+    <div class="row" data-th-if="${ #lists.isEmpty(sampleCollectingTubes)}">
         <div class="col-sm-12">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h3 class="text-center text-danger">
-                    <strong>There is no consultation upto now please add consultation to the system
-                        using add user button.
+                    <strong>There is no sampleCollectingTube upto now please add sampleCollectingTube to the system
+                            using add user button.
                     </strong>
                 </h3>
             </div>
