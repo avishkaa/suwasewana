@@ -62,7 +62,7 @@ public class LabTestController {
 
     @GetMapping("/add")
     public String laboratoryTestAddFrom(Model model) {
-        return commonMethod(model, new LabTest(), false);
+        return commonMethod(model, new LabTest(), true);
     }
 
     // Above method support to send data to front end - All List, update, edit
