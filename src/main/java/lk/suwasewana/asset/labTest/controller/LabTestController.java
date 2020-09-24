@@ -38,7 +38,7 @@ public class LabTestController {
         model.addAttribute("department", Department.values());
         model.addAttribute("labTestDoneHere", LabtestDoneHere.values());
         model.addAttribute("labTestParameters", labTestParameterService.findAll());
-        model.addAttribute("sampleCollectingTest", sampleCollectingTubeService.findAll());
+        model.addAttribute("sampleCollectingTests", sampleCollectingTubeService.findAll());
         return "labTest/addLabTest";
     }
 

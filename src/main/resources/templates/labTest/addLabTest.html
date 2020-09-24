@@ -12,7 +12,8 @@
 <div class="container-fluid" style="margin-top: 50px">
     <div class="panel panel-primary ">
         <div class="panel panel-heading text-center">
-            <h4><b><span data-th-text="${addStatus==true?'New Laboratory Test Add':'Update Laboratory Test'}"></span></b>
+            <h4><b><span
+                    data-th-text="${addStatus==true?'New Laboratory Test Add':'Update Laboratory Test'}"></span></b>
             </h4>
         </div>
         <div class="panel-body">
@@ -47,26 +48,14 @@
                         </ul>
                         <div class="row">
                             <div class="col-sm-6">
+                                <!--id-->
+                                <input data-th-if="${addStatus==false}" class="form-control"
+                                       data-th-field="*{id}" type="hidden"/>
                                 <div class="form-group" data-th-if="${addStatus==false}">
-                                    <label class="control-label col-md-4" for="id">ID :</label>
+                                    <label class="control-label col-md-4" for="code">Test Code</label>
                                     <div class="col-md-8">
-                                        <input class="form-control" id="id" name="id" placeholder="Enter ID Here"
-                                               data-th-field="*{id}" type="text" readonly="readonly"/>
-                                        <span class="error" data-th-errors="*{id}"
-                                              data-th-if="${#fields.hasErrors('id')}">Error ID</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Test Code</label>
-                                    <div class="col-md-8">
-                                        <input autofocus class="form-control"
-                                               name="code" placeholder="Enter Unic Test Code for Test" required
-                                               data-th-field="*{code}" data-th-if="${addStatus==true}" type="text"/>
-                                        <input class="form-control" name="code" readonly="readonly"
-                                               data-th-field="*{code}"
-                                               data-th-if="${addStatus==false}" type="text"/>
-                                        <span class="error" data-th-errors="*{code}"
-                                              data-th-if="${#fields.hasErrors('code')}">Error Test Code</span>
+                                        <input type="text" class="form-control" name="code" id="code" readonly
+                                               data-th-field="*{code}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -92,8 +81,9 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4" data-th-for="title">Test Done Place</label>
-                                    <div class="col-md-4">
+                                    <label class="control-label col-md-4" data-th-for="${'title'}">Test Done
+                                                                                                   Place</label>
+                                    <div class="col-md-8">
                                         <select class="form-control" data-th-field="*{labtestDoneHere}">
                                             <option data-th-each="labTestDoneHeres : ${labTestDoneHere}"
                                                     data-th-text="${labTestDoneHeres.labtestDoneHere}"
@@ -112,17 +102,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4" for="sampleCollectingTube">Sample Collecting
-                                        Tube</label>
+                                    <label class="control-label col-md-4"
+                                           data-th-for="${'sampleCollectingTube'}">Sample
+                                                                                                        Collecting
+                                                                                                     Tube</label>
                                     <div class="col-md-8">
-                                        <input class="form-control" id="sampleCollectingTube"
-                                               name="sampleCollectingTube"
-                                               placeholder="Enter Sample Collecting Tube" required
-                                               data-th-field="*{sampleCollectingTube}" type="text"/>
-                                        <span class="error" data-th-errors="*{sampleCollectingTube}"
-                                              data-th-if="${#fields.hasErrors('sampleCollectingTube')}">Sample
-                                                                                                       Collecting
-                                                                                                 Tube Error</span>
+                                        <select class="form-control" data-th-field="*{sampleCollectingTube}">
+                                            <option data-th-each="sampleCollectingTube : ${sampleCollectingTubes}"
+                                                    data-th-text="${sampleCollectingTube.name}"
+                                                    data-th-value="${sampleCollectingTube.id}"></option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +149,8 @@
                                             <th data-th-text="${labTestParameter.unit}"></th>
                                             <th class="text-center"><span
                                                     data-th-text="${labTestParameter.min}"></span>&nbsp;-
-                                                &nbsp;<span data-th-text="${labTestParameter.max}"></span></th>
+                                                                                                  &nbsp;<span
+                                                        data-th-text="${labTestParameter.max}"></span></th>
                                             <th class="text-center">
                                                 <input name="labTestParameters" data-th-value="${labTestParameter.id}"
                                                        type="checkbox"/>
@@ -183,8 +173,10 @@
                                 <div class="row">
                                     <div class="alert alert-warning " data-th-if="${addStatus==false}">
                                         <h4 class="text-center"> If you are edit some thing on this lab test !!! <br/>
-                                            &nbsp;<span class="glyphicon glyphicon-warning-sign"></span> Please set all
-                                            parameter/s which is/are belonged this test, before click the update button.
+                                                                 &nbsp;<span
+                                                    class="glyphicon glyphicon-warning-sign"></span> Please set all
+                                                                 parameter/s which is/are belonged this test, before
+                                                                 click the update button.
                                         </h4>
                                     </div>
                                 </div>
