@@ -6,99 +6,93 @@ import lk.suwasewana.asset.labTest.entity.Enum.LabtestDoneHere;
 import lk.suwasewana.asset.labTest.entity.LabTest;
 import lk.suwasewana.asset.labTest.service.LabTestService;
 import lk.suwasewana.asset.labTestParameter.service.LabTestParameterService;
-import lk.suwasewana.asset.sampleCollectingTube.service.SampleCollectingTubeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping( "/labTest" )
+@RequestMapping("/labTest")
 public class LabTestController {
     private final LabTestService labTestService;
     private final LabTestParameterService labTestParameterService;
-    private final SampleCollectingTubeService sampleCollectingTubeService;
 
     @Autowired
-    public LabTestController(LabTestService labTestService, LabTestParameterService labTestParameterService,
-                             SampleCollectingTubeService sampleCollectingTubeService) {
+    public LabTestController(LabTestService labTestService, LabTestParameterService labTestParameterService) {
         this.labTestService = labTestService;
         this.labTestParameterService = labTestParameterService;
-        this.sampleCollectingTubeService = sampleCollectingTubeService;
     }
 
-    private String commonMethod(Model model, LabTest labTest, boolean addState) {
-        model.addAttribute("labTest", labTest);
-        model.addAttribute("addStatus", addState);
-        model.addAttribute("department", Department.values());
-        model.addAttribute("labTestDoneHere", LabtestDoneHere.values());
-        model.addAttribute("labTestParameters", labTestParameterService.findAll());
-        model.addAttribute("sampleCollectingTests", sampleCollectingTubeService.findAll());
-        return "labTest/addLabTest";
-    }
-
-    @GetMapping
+    @RequestMapping
     public String laboratoryTestPage(Model model) {
-        List< LabTest > labTests = labTestService.findAll();
+        List<LabTest> labTests = labTestService.findAll();
         model.addAttribute("labTests", labTests);
         return "labTest/labTest";
     }
 
-    @GetMapping( "/{id}" )
-    public String laboratoryTestView(@PathVariable( "id" ) Integer id, Model model) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String laboratoryTestView(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("labTestDetail", labTestService.findById(id));
         return "labTest/labTest-detail";
     }
 
-    @GetMapping( "/edit/{id}" )
-    public String editLabTestFrom(@PathVariable( "id" ) Integer id, Model model) {
-        return commonMethod(model, labTestService.findById(id), false);
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editLabTestFrom(@PathVariable("id") Integer id,Model model) {
+        model.addAttribute("labTest", labTestService.findById(id));
+        model.addAttribute("department", Department.values());
+        model.addAttribute("labTestDoneHere", LabtestDoneHere.values());
+        model.addAttribute("addStatus", false);
+        model.addAttribute("labTestParameters", labTestParameterService.findAll());
+        return "labTest/addLabTest";
     }
 
-    @GetMapping( "/add" )
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String laboratoryTestAddFrom(Model model) {
-        return commonMethod(model, new LabTest(), true);
+        model.addAttribute("addStatus", true);
+        model.addAttribute("labTest", new LabTest());
+        model.addAttribute("labTestDoneHere", LabtestDoneHere.values());
+        model.addAttribute("department", Department.values());
+        model.addAttribute("labTestParameters", labTestParameterService.findAll());
+        return "labTest/addLabTest";
     }
 
     // Above method support to send data to front end - All List, update, edit
     //Bellow method support to do back end function save, delete, update, search
 
-    @PostMapping( value = {"/add", "/update"} )
+    @RequestMapping(value = {"/add","/update"}, method = RequestMethod.POST)
     public String addLabTest(@Valid @ModelAttribute LabTest labTest, BindingResult result, Model model) {
-        if ( result.hasErrors() ) {
-            for ( FieldError error : result.getFieldErrors() ) {
+        if (result.hasErrors()) {
+            for (FieldError error : result.getFieldErrors()) {
                 System.out.println(error.getField() + ": " + error.getDefaultMessage());
             }
-            return commonMethod(model, labTest, false);
+            model.addAttribute("addStatus", false);
+            model.addAttribute("labTestDoneHere", LabtestDoneHere.values());
+            model.addAttribute("department", Department.values());
+            model.addAttribute("labTestParameters", labTestParameterService.findAll());
+            return "labTest/addLabTest";
         }
-        // if labTest is new, need to create new unique code to save it
-        if ( labTest.getId() != null ) {
-//last lab test save on db according to lab test department and take it code find it number and create a new number
-// for new lab test
-            LabTest lastOneAccDepartment = labTestService.findByDepartmentLatestOne(labTest.getDepartment());
-            if ( lastOneAccDepartment == null ) {
-                labTest.setCode(labTest.getDepartment().toString().concat("00001"));
-            } else {
-//todo->
-                labTest.setCode();
-            }
-        }
+    if(labTest.getId() != null){
+      labTestService.persist(labTest);
+    }
         labTestService.persist(labTest);
         return "redirect:/labTest";
     }
 
-    @GetMapping( value = "/remove/{id}" )
+    @RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
     public String removeLabTest(@PathVariable Integer id) {
         labTestService.delete(id);
         return "redirect:/labTest";
     }
 
-    @GetMapping( value = "/search" )
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(Model model, LabTest labTest) {
         model.addAttribute("labTestDetail", labTestService.search(labTest));
         return "labTest/labTest-detail";

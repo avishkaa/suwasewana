@@ -1,7 +1,12 @@
 package lk.suwasewana.asset.commonAsset.service;
 
+import lk.suwasewana.asset.commonAsset.model.Enum.BloodGroup;
+import lk.suwasewana.asset.commonAsset.model.Enum.CivilStatus;
+import lk.suwasewana.asset.commonAsset.model.Enum.Gender;
+import lk.suwasewana.asset.commonAsset.model.Enum.Title;
 import lk.suwasewana.asset.employee.controller.EmployeeRestController;
 import lk.suwasewana.asset.employee.entity.Enum.Designation;
+import lk.suwasewana.asset.employee.entity.Enum.EmployeeStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
@@ -28,6 +33,14 @@ public class CommonService {
                 .toString());
     }
 
+    public void commonEmployeeAndOffender(Model model) {
+        model.addAttribute("title", Title.values());
+        model.addAttribute("gender", Gender.values());
+        model.addAttribute("civilStatus", CivilStatus.values());
+        model.addAttribute("employeeStatus", EmployeeStatus.values());
+        model.addAttribute("designation", Designation.values());
+        model.addAttribute("bloodGroup", BloodGroup.values());
+    }
 
     //common things to employee and offender - end
     //common mobile number length employee,offender,guardian, petitioner - start

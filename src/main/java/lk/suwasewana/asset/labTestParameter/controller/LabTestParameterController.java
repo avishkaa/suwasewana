@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping( "/labTestParameter" )
+@RequestMapping("/labTestParameter")
 public class LabTestParameterController {
     private final LabTestParameterService labTestParameterService;
 
@@ -34,21 +33,21 @@ public class LabTestParameterController {
         return "labTestParameter/labTestParameter";
     }
 
-    @RequestMapping( value = "/{id}", method = RequestMethod.GET )
-    public String labTestParameterView(@PathVariable( "id" ) Integer id, Model model) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String labTestParameterView(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("labTestParameterDetail", labTestParameterService.findById(id));
         return "labTestParameter/labTestParamater-detail";
     }
 
-    @RequestMapping( value = "/edit/{id}", method = RequestMethod.GET )
-    public String editLabTestParameterFrom(@PathVariable( "id" ) Integer id, Model model) {
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editLabTestParameterFrom(@PathVariable("id") Integer id,Model model) {
         model.addAttribute("labTestParameter", labTestParameterService.findById(id));
         model.addAttribute("parameterHeader", ParameterHeader.values());
         model.addAttribute("addStatus", false);
         return "labTestParameter/addLabTestParameter";
     }
 
-    @RequestMapping( value = "/add", method = RequestMethod.GET )
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String labTestParameterAddFrom(Model model) {
         model.addAttribute("addStatus", true);
         model.addAttribute("parameterHeader", ParameterHeader.values());
@@ -59,12 +58,11 @@ public class LabTestParameterController {
     // Above method support to send data to front end - All List, update, edit
     //Bellow method support to do back end function save, delete, update, search
 
-    @RequestMapping( value = {"/add", "/update"}, method = RequestMethod.POST )
-    public String addLabTestParameter(@Valid @ModelAttribute LabTestParameter labTestParameter, BindingResult result,
-                                      RedirectAttributes redirectAttributes, Model model) {
+    @RequestMapping(value = {"/add","/update"}, method = RequestMethod.POST)
+    public String addLabTestParameter(@Valid @ModelAttribute LabTestParameter labTestParameter, BindingResult result, Model model) {
 
-        if ( result.hasErrors() ) {
-            for ( FieldError error : result.getFieldErrors() ) {
+        if (result.hasErrors()) {
+            for (FieldError error : result.getFieldErrors()) {
                 System.out.println(error.getField() + ": " + error.getDefaultMessage());
             }
             model.addAttribute("addStatus", true);
@@ -72,18 +70,17 @@ public class LabTestParameterController {
             model.addAttribute("labTestParameter", labTestParameter);
             return "labTestParameter/addLabTestParameter";
         }
-        redirectAttributes.addFlashAttribute("labTestParameterDetail",
-                                             labTestParameterService.persist(labTestParameter));
+        labTestParameterService.persist(labTestParameter);
         return "redirect:/labTestParameter";
     }
 
-    @RequestMapping( value = "/remove/{id}", method = RequestMethod.GET )
+    @RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
     public String removeLabTestParameter(@PathVariable Integer id) {
         labTestParameterService.delete(id);
         return "redirect:/labTestParameter";
     }
 
-    @RequestMapping( value = "/search", method = RequestMethod.GET )
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(Model model, LabTestParameter labTestParameter) {
         model.addAttribute("labTestParameterDetail", labTestParameterService.search(labTestParameter));
         return "labTestParameter/labTestParameter-detail";

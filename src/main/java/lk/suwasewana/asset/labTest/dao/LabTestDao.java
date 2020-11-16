@@ -1,6 +1,5 @@
 package lk.suwasewana.asset.labTest.dao;
 
-import lk.suwasewana.asset.labTest.entity.Enum.Department;
 import lk.suwasewana.asset.labTestParameter.entity.LabTestParameter;
 import lk.suwasewana.asset.labTest.entity.LabTest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +17,4 @@ public interface LabTestDao extends JpaRepository<LabTest, Integer> {
 
     List<LabTest> findByLabTestParameters(LabTestParameter labTestParameter);
 
-    LabTest findByDepartmentOrderByIdDesc(Department department);
 }

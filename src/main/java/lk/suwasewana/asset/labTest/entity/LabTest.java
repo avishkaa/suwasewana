@@ -6,7 +6,6 @@ import lk.suwasewana.asset.labTest.entity.Enum.Department;
 import lk.suwasewana.asset.labTest.entity.Enum.LabtestDoneHere;
 import lk.suwasewana.asset.labTestParameter.entity.LabTestParameter;
 import lk.suwasewana.asset.medicalPackage.entity.MedicalPackage;
-import lk.suwasewana.asset.sampleCollectingTube.entity.SampleCollectingTube;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +13,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,42 +21,45 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonFilter( "LabTest" )
+@JsonFilter("LabTest")
 public class LabTest {
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column( nullable = false, unique = true )
+    @Column(name = "code", nullable = false, length = 6, unique = true)
     private String code;
 
-    @Column( nullable = false )
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column( precision = 10, scale = 2 )
+    @Column(name = "price", precision=10, scale=2)
     private BigDecimal price;
 
-    @Enumerated( EnumType.STRING )
+    @Column(name = "sample_collecting_tube", nullable = false, length = 20)
+    private String sampleCollectingTube;
+
+    @Column(name = "department", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Department department;
 
-    @Enumerated( EnumType.STRING )
+
+    @Enumerated(EnumType.STRING)
     private LabtestDoneHere labtestDoneHere;
 
+    @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    private SampleCollectingTube sampleCollectingTube;
+    @OneToMany(mappedBy = "labTest", fetch = FetchType.EAGER)
+    private List<InvoiceHasLabTest>  invoiceHasLabTests= new ArrayList<>();
 
-    @OneToMany( mappedBy = "labTest", fetch = FetchType.EAGER )
-    private List< InvoiceHasLabTest > invoiceHasLabTests;
-
-    @ManyToMany( mappedBy = "labTests", fetch = FetchType.LAZY )
-    private List< MedicalPackage > medicalPackages;
+    @ManyToMany(mappedBy = "labTests",fetch=FetchType.LAZY)
+    private List<MedicalPackage> medicalPackages = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable( name = "lab_test_has_parameter",
-            joinColumns = @JoinColumn( name = "lab_test_id" ),
-            inverseJoinColumns = @JoinColumn( name = "lab_test_parameter_id" ) )
-    private List< LabTestParameter > labTestParameters;
+    @JoinTable(name = "labtest_has_parameter",
+            joinColumns = @JoinColumn(name = "labtest_id"),
+            inverseJoinColumns = @JoinColumn(name = "labtest_parameter_id"))
+    private List<LabTestParameter> labTestParameters = new ArrayList<>();
 
 }

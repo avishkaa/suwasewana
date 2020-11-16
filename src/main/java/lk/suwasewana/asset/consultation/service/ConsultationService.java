@@ -1,6 +1,5 @@
 package lk.suwasewana.asset.consultation.service;
 
-
 import lk.suwasewana.asset.consultation.dao.ConsultationDao;
 import lk.suwasewana.asset.consultation.entity.Consultation;
 import lk.suwasewana.util.interfaces.AbstractService;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.List;
 

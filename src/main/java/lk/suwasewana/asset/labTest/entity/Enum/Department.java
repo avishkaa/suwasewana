@@ -1,20 +1,24 @@
 package lk.suwasewana.asset.labTest.entity.Enum;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+public enum  Department {
+     BIOCHEMISTRY("Bio Chemistry"),
+     CLINICALPATHALOGY ("Clinical Pathalogy"),
+     HEAMATOLOGY ("Heamatology"),
+     MICROBIOLOGY  ("Microbiology"),
+     IMMUNOLOGYSEROLOGY ("Immunology"),
+     SEROLOGY ("Serology"),
+     HISTOPATHALOGY  ("Histopathalogy Cytology"),
+     MOLECULARBIOLOGY   ("Molecular Biology"),
+     EXTRA ("Extra");
 
-@Getter
-@AllArgsConstructor
-public enum Department {
-    BI("Bio Chemistry"),
-    CP("Clinical Pathology"),
-    HL("Haematology"),
-    MB("Microbiology"),
-    IL("Immunology"),
-    SL("Serology"),
-    HP("Histopathology Cytology"),
-    MU("Molecular Biology"),
-    EX("Extra");
 
     private final String department;
+
+    Department(String department) {
+        this.department = department;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
 }
